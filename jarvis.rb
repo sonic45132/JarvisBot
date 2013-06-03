@@ -38,6 +38,8 @@ end
 
 if __FILE__ == $0
 
+  parsers = %w(TradeParser MtGoxParser SettingsParser)
+
   if !File.exist? File.dirname(__FILE__)+'/config.yaml'
     settings = Hash.new
     print 'Enter XMPP username: '

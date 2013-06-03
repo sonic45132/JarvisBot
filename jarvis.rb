@@ -1,4 +1,5 @@
 require 'xmpp4r-simple'
+require 'class_loader'
 require 'io/console'
 require 'psych'
 
@@ -10,6 +11,7 @@ class Jarvis
 
   def read_settings
     settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
+    @alertee = settings['alertee']
     puts 'Connecting...'
     @im = Jabber::Simple.new(settings['imuser'],settings['impass'])
     puts 'Connected.'
@@ -42,6 +44,8 @@ if __FILE__ == $0
     settings['imuser'] = gets.chomp
     print 'Enter XMPP password: '
     settings['impass'] = gets.chomp
+    print 'Enter XMPP user to be alerted: '
+    settings['alertee'] = gets.chomp
 
     File.open(File.dirname(__FILE__)+'/config.yaml','w') do |file|
       file.puts settings.to_yaml
@@ -54,7 +58,7 @@ if __FILE__ == $0
   thread_exit = false
   chat_thread = Thread.new {
     while !thread_exit do
-      jarvis.run()
+      jarvis.run
       sleep 1.5
     end
     jarvis.clean_up()

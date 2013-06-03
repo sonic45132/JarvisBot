@@ -16,11 +16,13 @@ class Jarvis
   end
 
   def run
+    exit = false
     if @im.received_messages?
       @im.received_messages { |msg|
-        parse_message(msg)
+        exit = parse_message(msg)
       }
     end
+    return exit
   end
 
   def clean_up
@@ -29,6 +31,7 @@ class Jarvis
 
   def parse_message(msg)
     puts msg.body if msg.type == :chat
+    return true if msg.body.downcase == 'exit'
   end
 
 end
@@ -53,8 +56,8 @@ if __FILE__ == $0
   thread_exit = false
   chat_thread = Thread.new {
     while !thread_exit do
-      jarvis.run()
-      sleep 2
+      break if jarvis.run()
+      sleep 1.5
     end
     jarvis.clean_up()
   }

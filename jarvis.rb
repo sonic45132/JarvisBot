@@ -1,5 +1,7 @@
+require_relative 'settings_parser'
+require_relative 'mt_gox_parser'
+require_relative 'trade_parser'
 require 'xmpp4r-simple'
-require 'class_loader'
 require 'io/console'
 require 'psych'
 
@@ -17,7 +19,6 @@ class Jarvis
     puts 'Setting up parsers...'
     settings['parsers'].each {|parser| @parsers.push(Object.const_get(parser).new)}
     puts 'Parsers Loaded.'
-    puts @parsers
     puts 'Connecting...'
     @im = Jabber::Simple.new(settings['imuser'],settings['impass'])
     puts 'Connected.'

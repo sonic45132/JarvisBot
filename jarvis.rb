@@ -7,11 +7,17 @@ class Jarvis
 
   def initialize
     @im = nil
+    @parsers = Array.new
+    test = TradeParser.new
   end
 
   def read_settings
     settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
     @alertee = settings['alertee']
+    puts 'Setting up parsers...'
+    settings['parsers'].each {|parser| @parsers.push(Object.const_get(parser).new)}
+    puts 'Parsers Loaded.'
+    puts @parsers
     puts 'Connecting...'
     @im = Jabber::Simple.new(settings['imuser'],settings['impass'])
     puts 'Connected.'
@@ -48,6 +54,9 @@ if __FILE__ == $0
     settings['impass'] = gets.chomp
     print 'Enter XMPP user to be alerted: '
     settings['alertee'] = gets.chomp
+    puts 'Enter each parser you want to use. Enter it on one line with spaces.'
+    print parsers
+    settings['parsers'] = gets.chomp.split
 
     File.open(File.dirname(__FILE__)+'/config.yaml','w') do |file|
       file.puts settings.to_yaml

@@ -21,7 +21,10 @@ class Jarvis
         parse_message(msg)
       }
     end
-    sleep 1.5
+  end
+
+  def clean_up
+    @im.disconnect
   end
 
   def parse_message(msg)
@@ -50,9 +53,7 @@ if __FILE__ == $0
   thread_exit = false
   chat_thread = Thread.new {
     while true do
-      if thread_exit == true
-        Thread.current.exit()
-      end
+      Thread.current.exit() if thread_exit
       jarvis.run()
       sleep 2
     end

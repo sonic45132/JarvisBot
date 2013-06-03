@@ -1,0 +1,1 @@
+This is a XMPP bot tha will be used for many awesome things.

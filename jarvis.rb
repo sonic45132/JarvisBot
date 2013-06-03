@@ -16,8 +16,8 @@ class Jarvis
   end
 
   def run
-    if im.received_messages?
-      im.received_messages { |msg|
+    if @im.received_messages?
+      @im.received_messages { |msg|
         parse_message(msg)
       }
     end

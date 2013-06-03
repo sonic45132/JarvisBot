@@ -59,11 +59,12 @@ if __FILE__ == $0
       break if jarvis.run()
       sleep 1.5
     end
+    thread_exit = true
     jarvis.clean_up()
   }
 
   input = ''
-  while input != 'exit'
+  while input != 'exit' && !thread_exit
     input = gets().chomp()
   end
   thread_exit = true

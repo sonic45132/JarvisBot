@@ -52,8 +52,7 @@ if __FILE__ == $0
   jarvis.read_settings
   thread_exit = false
   chat_thread = Thread.new {
-    while true do
-      Thread.current.exit() if thread_exit
+    while !thread_exit do
       jarvis.run()
       sleep 2
     end

@@ -22,7 +22,7 @@ class Jarvis
     puts 'Connecting...'
     @im = Jabber::Simple.new(settings['imuser'],settings['impass'])
     puts 'Connected.'
-    @im.deliver(@alertee,'Jarvis bot now online.Waiting for your orders, sir.')
+    @im.deliver(@alertee,'Jarvis bot now online. Waiting for your orders, sir.')
   end
 
   def run

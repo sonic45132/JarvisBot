@@ -31,8 +31,8 @@ class EveParser
 
   def parse(msg)
     charid = @api.Characters.characters.first.characterID
-    api.scope = 'char'
-    return queue = api.SkillQueue('characterID' => charid).skillqueue
+    @api.scope = 'char'
+    return queue = @api.SkillQueue('characterID' => charid).skillqueue
   end
 
 end

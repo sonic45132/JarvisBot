@@ -4,6 +4,10 @@ class TradeParser
 
   end
 
+  def setup
+
+  end
+
   def parse(msg)
     return 'hi'
   end

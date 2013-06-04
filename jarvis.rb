@@ -1,6 +1,7 @@
 require_relative 'settings_parser'
 require_relative 'mt_gox_parser'
 require_relative 'trade_parser'
+require_relative 'eve_parser'
 require 'xmpp4r-simple'
 require 'io/console'
 require 'psych'
@@ -74,6 +75,12 @@ if __FILE__ == $0
     puts 'Enter each parser you want to use. Enter it on one line with spaces.'
     print parsers
     settings['parsers'] = gets.chomp.split
+
+    Dir.mkdir('configs') unless File.directory?('configs')
+
+    parsers = Array.new
+    settings['parsers'].each {|parser| parsers.push(Object.const_get(parser).new)}
+    parsers.each { |parser| parser.setup }
 
     File.open(File.dirname(__FILE__)+'/config.yaml','w') do |file|
       file.puts settings.to_yaml

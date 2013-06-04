@@ -15,7 +15,7 @@ class EveParser
       result = @api.Characters
       result.characters.each{|character|
         puts character.name
-      end
+      }
     end
   end
 

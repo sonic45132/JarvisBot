@@ -11,7 +11,7 @@ class EveParser
     if File.exist? File.dirname(__FILE__)+'/configs/eve_config.yaml'
       settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
       EAAL.cache = EAAL::Cache::FileCache.new
-      @api = EAAL::API.new(settings['userid'], settings['apikey'])
+      @api = EAAL::API.new('2221766', 'auMDqfF7zmtDbopHjKPvtgyQSYBXytHGA8uEWVZRpiFfPja7ISpHJEf4H8FJ2TUX')
       result = @api.Characters
       result.characters.each{|character|
         puts character.name
@@ -36,7 +36,7 @@ class EveParser
   def parse(msg)
     charid = @api.Characters.characters.first.characterID
     @api.scope = 'char'
-    return queue = @api.SkillQueue('characterID' => charid).skillqueue
+    return queue = @api.SkillQueue('characterID' => charid)
   end
 
 end

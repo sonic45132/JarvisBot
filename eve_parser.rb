@@ -11,7 +11,9 @@ class EveParser
     if File.exist? File.dirname(__FILE__)+'/configs/eve_config.yaml'
       settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
       EAAL.cache = EAAL::Cache::FileCache.new
+      puts 'Connecting to Eve API...'
       @api = EAAL::API.new('2221766', 'auMDqfF7zmtDbopHjKPvtgyQSYBXytHGA8uEWVZRpiFfPja7ISpHJEf4H8FJ2TUX')
+      puts 'Connect to Eve'
       result = @api.Characters
       result.characters.each{|character|
         puts character.name

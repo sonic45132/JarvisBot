@@ -10,7 +10,7 @@ class EveParser
 
   def load_settings
     if File.exist? File.dirname(__FILE__)+'/configs/eve_config.yaml'
-      settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
+      settings = Psych.load_file(File.dirname(__FILE__)+'/configs/eve_config.yaml')
       EAAL.cache = EAAL::Cache::FileCache.new
       puts 'Connecting to Eve API...'
       @api = EAAL::API.new(settings['userid'], settings['apikey'])

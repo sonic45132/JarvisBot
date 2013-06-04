@@ -46,7 +46,7 @@ class Jarvis
     puts responces
 
     @im.deliver(@alertee,create_response(responces))
-    puts msg.body if msg.type == :chat
+    puts (msg.thread<<' '<<msg.body) if msg.type == :chat
   end
 
   def create_response(responces)

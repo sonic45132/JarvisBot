@@ -12,6 +12,10 @@ class EveParser
       settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
       EAAL.cache = EAAL::Cache::FileCache.new
       @api = EAAL::API.new(settings['userid'], settings['apikey'])
+      result = @api.Characters
+      result.characters.each{|character|
+        puts character.name
+      end
     end
   end
 

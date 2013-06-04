@@ -36,7 +36,7 @@ class EveParser
   end
 
   def parse(msg)
-    if msg.body.downcase == 'eve queue'
+    if msg.downcase == 'eve queue'
       charid = @api.Characters.characters.first.characterID
       @api.scope = 'char'
       return queue = @api.SkillQueue('characterID' => charid).skillqueue
@@ -45,4 +45,10 @@ class EveParser
     end
   end
 
+end
+
+if __FILE__ == $0
+  eve = EveParser.new()
+  puts eve.parse('eve queue')
+  puts eve.parse('nothing at all')
 end

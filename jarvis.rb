@@ -38,11 +38,12 @@ class Jarvis
   end
 
   def parse_message(msg)
-    responces = Array.new
+    responces = Array.new(0)
     @parsers.each { |parser|
       response = parser.parse(msg)
       responces.push(parser.class.name+': '+response.to_s) unless response == nil
     }
+    puts responces
 
     @im.deliver(@alertee,create_response(responces))
     puts msg.body if msg.type == :chat

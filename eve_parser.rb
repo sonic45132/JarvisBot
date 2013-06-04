@@ -8,8 +8,10 @@ class EveParser
   end
 
   def load_settings
-    settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
-    @api = EAAL::API.new(settings['userid'], settings['apikey'])
+    if File.exist? File.dirname(__FILE__)+'/configs/eve_config.yaml'
+      settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
+      @api = EAAL::API.new(settings['userid'], settings['apikey'])
+    end
   end
 
   def setup

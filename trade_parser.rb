@@ -5,7 +5,7 @@ class TradeParser
   end
 
   def parse(msg)
-
+    return nil
   end
 
 end

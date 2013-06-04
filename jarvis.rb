@@ -9,8 +9,7 @@ class Jarvis
 
   def initialize
     @im = nil
-    @parsers = Array.new
-    test = TradeParser.new
+    @parsers = Array.new(0)
   end
 
   def read_settings
@@ -22,6 +21,7 @@ class Jarvis
     puts 'Connecting...'
     @im = Jabber::Simple.new(settings['imuser'],settings['impass'])
     puts 'Connected.'
+    @im.deliver(@alertee,"Jarvis bot now online.\nWaiting for your orders, sir.")
   end
 
   def run
@@ -38,7 +38,22 @@ class Jarvis
   end
 
   def parse_message(msg)
+    responces = Array.new
+    @parsers.each { |parser|
+      response = parser.parse(msg)
+      responces.push(parser.class.name+': '+response.to_s) unless response == nil
+    }
+
+    @im.deliver(@alertee,create_response(responces))
     puts msg.body if msg.type == :chat
+  end
+
+  def create_response(responces)
+    resp_string = ''
+    responces.each { |responce|
+      resp_string += (responce.to_s +"\n")
+    }
+    return resp_string
   end
 
 end

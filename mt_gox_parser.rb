@@ -5,7 +5,7 @@ class MtGoxParser
   end
 
   def parse(msg)
-
+    return nil
   end
 
 end

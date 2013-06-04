@@ -5,7 +5,7 @@ class SettingsParser
   end
 
   def parse(msg)
-
+    return nil
   end
 
 end

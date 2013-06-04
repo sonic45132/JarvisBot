@@ -89,7 +89,7 @@ if __FILE__ == $0
   end
 
   jarvis = Jarvis.new
-  jarvis.read_settings
+  jarvis.read_settings()
   thread_exit = false
   chat_thread = Thread.new {
     while !thread_exit do

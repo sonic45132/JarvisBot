@@ -4,7 +4,8 @@ class EveParser
 
   def initialize
     @api = nil
-    load_settings
+    puts 'loading settings...'
+    self.load_settings
   end
 
   def load_settings

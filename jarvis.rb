@@ -52,7 +52,7 @@ class Jarvis
   def create_response(responces)
     resp_string = String.new
     responces.each { |responce|
-      resp_string += (responce.to_s +"\n")
+      resp_string << (responce.to_s<<"\n")
     }
     return resp_string
   end

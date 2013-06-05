@@ -1,5 +1,6 @@
 require 'eaal'
 require 'date'
+require 'psych'
 
 class EveParser
 
@@ -47,11 +48,20 @@ class EveParser
     queue = @api.SkillQueue('characterID' => charid).skillqueue
     rows = Array.new
     queue.each { |row|
-      diff = DateTime.strftime(row.endTime.to_s, '%F %T') - DateTime.strftime(row.startTime.to_s, '%F %T')
-      time_left = Date.send(:day_fraction_to_time, diff)
-      rows.push(time_left)
+      skill = look_up(row.typeID)
+      diff = DateTime.strptime(row.endTime.to_s, '%F %T').to_time - Time.now
+      hours = (diff/ 3600).to_i
+      minutes = ((diff % 3600) / 60).to_i
+      seconds = ((diff % 3600) % 60).to_i
+      rows.push(skill+' '+row.level+' - '+hours.to_s+':'+minutes.to_s+':'+seconds.to_s)
     }
-    return rows.to_s
+    return rows.join("\n")
+  end
+
+  def look_up(id)
+    @api.scope = 'eve'
+    name = @api.TypeName('ids' => id.to_s).types.first.typeName
+    return name.to_s
   end
 
 end

@@ -45,8 +45,8 @@ class Jarvis
       responces.push(parser.class.name+': '+response.to_s) unless response == nil
     }
     puts responces
-
-    @im.deliver(@alertee,create_response(responces))
+    puts 'Responce is: '+responces.any?.to_s
+    @im.deliver(@alertee,create_response(responces)) if responces.any?
     puts msg.body if msg.type == :chat
   end
 

@@ -53,7 +53,7 @@ class EveParser
       hours = (diff/ 3600).to_i
       minutes = ((diff % 3600) / 60).to_i
       seconds = ((diff % 3600) % 60).to_i
-      rows.push(skill+' '+row.level+' - '+hours.to_s+':'+minutes.to_s+':'+seconds.to_s)
+      rows.push(skill+' '+row.level+' - '+hours.to_s.rjust(2,'0')+':'+minutes.to_s.rjust(2,'0')+':'+seconds.to_s.rjust(2,'0'))
     }
     return rows.join("\n")
   end

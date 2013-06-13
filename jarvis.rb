@@ -35,6 +35,8 @@ class Jarvis
   end
 
   def clean_up
+    @im.deliver(@alertee,'Shutting down... Goodbye.')
+    sleep 1
     @im.disconnect
   end
 

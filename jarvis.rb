@@ -1,7 +1,7 @@
-require_relative 'settings_parser'
-require_relative 'mt_gox_parser'
-require_relative 'trade_parser'
-require_relative 'eve_parser'
+require_relative 'parsers/settings_parser'
+require_relative 'parsers/mt_gox_parser'
+require_relative 'parsers/trade_parser'
+require_relative 'parsers/eve_parser'
 require 'xmpp4r-simple'
 require 'io/console'
 require 'psych'
@@ -26,7 +26,6 @@ class Jarvis
   end
 
   def run
-
     if @im.received_messages?
       @im.received_messages { |msg|
         parse_message(msg)
@@ -34,8 +33,9 @@ class Jarvis
     end
   end
 
-  def clean_up
+  def shutdown
     @im.deliver(@alertee,'Shutting down... Goodbye.')
+    @parsers.each { |parser| parser.shutdown if parser.respond_to? :shutdown}
     sleep 1
     @im.disconnect
   end
@@ -47,7 +47,6 @@ class Jarvis
       responces.push(parser.class.name+': '+response.to_s) unless response == nil
     }
     puts responces
-    puts 'Responce is: '+responces.any?.to_s
     @im.deliver(@alertee,create_response(responces)) if responces.any?
     puts msg.body if msg.type == :chat
   end
@@ -64,7 +63,7 @@ end
 
 if __FILE__ == $0
 
-  parsers = %w(TradeParser MtGoxParser SettingsParser)
+  parsers = %w(TradeParser MtGoxParser EveParser SettingsParser)
 
   if !File.exist? File.dirname(__FILE__)+'/config.yaml'
     settings = Hash.new
@@ -82,7 +81,7 @@ if __FILE__ == $0
 
     parsers = Array.new
     settings['parsers'].each {|parser| parsers.push(Object.const_get(parser).new)}
-    parsers.each { |parser| parser.setup }
+    parsers.each { |parser| parser.setup if parser.respond_to? :setup}
 
     File.open(File.dirname(__FILE__)+'/config.yaml','w') do |file|
       file.puts settings.to_yaml
@@ -98,7 +97,7 @@ if __FILE__ == $0
       jarvis.run
       sleep 0.75
     end
-    jarvis.clean_up()
+    jarvis.shutdown()
   }
 
   input = ''

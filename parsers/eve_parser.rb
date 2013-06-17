@@ -11,6 +11,7 @@ class EveParser
   end
 
   def load_settings
+    puts File.expand_path(File.dirname(__FILE__)+'../configs/eve_config.yaml')
     if File.exist? File.dirname(__FILE__)+'../configs/eve_config.yaml'
       settings = Psych.load_file(File.dirname(__FILE__)+'../configs/eve_config.yaml')
       EAAL.cache = EAAL::Cache::FileCache.new

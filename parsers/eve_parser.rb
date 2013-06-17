@@ -11,9 +11,10 @@ class EveParser
   end
 
   def load_settings
-    puts File.expand_path(File.dirname(__FILE__)+'../configs/eve_config.yaml')
-    if File.exist? File.dirname(__FILE__)+'../configs/eve_config.yaml'
-      settings = Psych.load_file(File.dirname(__FILE__)+'../configs/eve_config.yaml')
+    puts File.expand_path(File.dirname(__FILE__)+'/../configs/eve_config.yaml')
+    puts File.dirname(__FILE__)+'/../configs/eve_config.yaml'
+    if File.exist? File.dirname(__FILE__)+'/../configs/eve_config.yaml'
+      settings = Psych.load_file(File.dirname(__FILE__)+'/../configs/eve_config.yaml')
       EAAL.cache = EAAL::Cache::FileCache.new
       puts 'Connecting to Eve API...'
       @api = EAAL::API.new(settings['userid'], settings['apikey'])
@@ -22,13 +23,13 @@ class EveParser
   end
 
   def setup
-    if !File.exist? File.dirname(__FILE__)+'../configs/eve_config.yaml'
+    if !File.exist? File.dirname(__FILE__)+'/../configs/eve_config.yaml'
       settings = Hash.new()
       print 'Enter api user id: '
       settings['userid'] = gets.chomp
       print 'Enter api key: '
       settings['apikey'] = gets.chomp
-      File.open(File.dirname(__FILE__)+'../configs/eve_config.yaml','w') do |file|
+      File.open(File.dirname(__FILE__)+'/../configs/eve_config.yaml','w') do |file|
         file.puts settings.to_yaml
       end
     end

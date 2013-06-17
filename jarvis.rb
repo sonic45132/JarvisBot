@@ -95,7 +95,7 @@ if __FILE__ == $0
   chat_thread = Thread.new {
     while !thread_exit do
       jarvis.run
-      sleep 1.5
+      sleep 0.75
     end
     jarvis.shutdown()
   }

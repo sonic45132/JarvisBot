@@ -1,6 +1,6 @@
 class TradeParser
 
-  def initialize
+  def initialize(config_path)
 
   end
 

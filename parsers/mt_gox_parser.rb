@@ -4,7 +4,7 @@ require 'uri'
 
 class MtGoxParser
 
-  def initialize
+  def initialize(config_path)
 
   end
 

@@ -1,6 +1,6 @@
 class SettingsParser
 
-  def initialize
+  def initialize(config_path)
 
   end
 

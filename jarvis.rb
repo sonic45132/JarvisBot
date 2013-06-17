@@ -6,6 +6,8 @@ require 'xmpp4r-simple'
 require 'io/console'
 require 'psych'
 
+CONFIG_PATH = File.dirname(__FILE__)+'/configs/'
+
 class Jarvis
 
   def initialize
@@ -17,7 +19,7 @@ class Jarvis
     settings = Psych.load_file(File.dirname(__FILE__)+'/config.yaml')
     @alertee = settings['alertee']
     puts 'Setting up parsers...'
-    settings['parsers'].each {|parser| @parsers.push(Object.const_get(parser).new)}
+    settings['parsers'].each {|parser| @parsers.push(Object.const_get(parser).new(CONFIG_PATH))}
     puts 'Parsers Loaded.'
     puts 'Connecting...'
     @im = Jabber::Simple.new(settings['imuser'],settings['impass'])
@@ -80,7 +82,7 @@ if __FILE__ == $0
     Dir.mkdir('configs') unless File.directory?('configs')
 
     parsers = Array.new
-    settings['parsers'].each {|parser| parsers.push(Object.const_get(parser).new)}
+    settings['parsers'].each {|parser| parsers.push(Object.const_get(parser).new(CONFIG_PATH))}
     parsers.each { |parser| parser.setup if parser.respond_to? :setup}
 
     File.open(File.dirname(__FILE__)+'/config.yaml','w') do |file|

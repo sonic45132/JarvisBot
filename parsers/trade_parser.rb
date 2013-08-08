@@ -9,7 +9,7 @@ class TradeParser
   end
 
   def parse(msg)
-    return 'hi'
+
   end
 
 end
